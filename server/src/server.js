@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
 const requestLogger = require('./middlewares/requestLogger');
 const logger = require('./middlewares/logger');
+const errorHandler = require('./middlewares/errorHandler');
+
 
 // Load environment variables
 dotenv.config();
@@ -37,6 +39,9 @@ app.use((err, req, res, next) => {
     logger.error(`500 - Server Error - ${err.message}`); // Error level for server errors
     res.status(500).send('Server error');
 });
+
+// Use custom error handler
+app.use(errorHandler); // Use the custom error handler
 
 // Start server
 const PORT = process.env.PORT || 5000;
