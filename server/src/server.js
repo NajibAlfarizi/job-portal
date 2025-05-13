@@ -6,7 +6,11 @@ const connectDB = require('./config/db');
 const requestLogger = require('./middlewares/requestLogger');
 const logger = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
+const passport = require('passport');
+require('./config/passport'); // Import konfigurasi Passport
 
+// Import routes
+const authRoutes = require('./routes/authRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -18,11 +22,15 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(requestLogger); // Log every request
+app.use(passport.initialize()); // Initialize Passport
 
 // Connect to MongoDB
 connectDB();
 
-// Routes (placeholder)
+// Routes
+app.use('/api/auth', authRoutes); // Gunakan route autentikasi
+
+// Root endpoint
 app.get('/', (req, res) => {
     logger.info('Root endpoint hit'); // Info level for general access
     res.send('API is running...');
