@@ -11,6 +11,7 @@ require('./config/passport'); // Import konfigurasi Passport
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -29,6 +30,7 @@ connectDB();
 
 // Routes
 app.use('/api/auth', authRoutes); // Gunakan route autentikasi
+app.use('/api/user', userRoutes); // Tambahkan routes
 
 // Root endpoint
 app.get('/', (req, res) => {
